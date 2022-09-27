@@ -2,9 +2,15 @@ package com.i2i.config;
 
 import javax.sql.DataSource;
 
+import com.i2i.controller.EmployeeController;
+import com.i2i.entity.Trainee;
+import com.i2i.entity.Trainer;
+import com.i2i.service.EmployeeService;
+import com.i2i.service.EmployeeServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -55,4 +61,6 @@ public class EmployeeConfig  {
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
+
+
 }

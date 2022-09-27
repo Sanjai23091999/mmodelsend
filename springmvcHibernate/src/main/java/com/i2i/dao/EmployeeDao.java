@@ -1,30 +1,66 @@
 package com.i2i.dao;
 
+import com.i2i.entity.Employee;
 import com.i2i.entity.Trainee;
 import com.i2i.entity.Trainer;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * <p>
+ * Employee dao interface used to manipulate details
+ * in database
+ * </p>
+ *
+ * @author Sanjai king
+ *
+ * @version 1
+ *
+ * @since 2022-07-18
+ */
+@Repository
+public interface EmployeeDao<T extends Employee> {
 
+    /**
+     *used to insert Employee into List
+     *@param employee {@link T} the employee object
+     *@return {void}
+     */
+    public void saveEmployee(T employee);
 
-public interface EmployeeDao<T> {
+    /**
+     * Retrive list of  All Employees
+     * @return {@link List} of {@link T}
+     */
+    public List<Trainee> retriveAllTrainees();
 
-    public void saveTrainee(Trainee trainee);
+    /**
+     * Retrive list of  All Employees
+     * @return {@link List} of {@link T}
+     */
+    public List<Trainer> retriveAllTrainers();
 
-    public void saveTrainer(Trainer trainer);
+    /**
+     * Retrive  Employee with his id
+     * @param employeeId {@link String} id of employee
+     * @return {@link T} the employee object
+     */
+    public Trainer  getTrainerById(String employeeId);
 
-    public List <Trainee> getTrainees();
+    /**
+     * Retrive  Employee with his id
+     * @param employeeId {@link String} id of employee
+     * @return {@link T} the employee object
+     */
+    public Trainee  getTraineeById(String employeeId);
 
-    public List <Trainer> getTrainers();
+    /**
+     * used to update  Employee
+     * @param updateEmployee {@link Employee} the employee object
+     * @return {void}
+     */
+    public void updateEmployee(T updateEmployee);
 
-    public void deleteTrainee(Trainee trainee);
-
-    public void deleteTrainer(Trainer trainer);
-
-    public void updateTrainee(Trainee trainee);
-
-    public Trainee getTraineeById(int id);
-
-    public Trainer getTrainerById(int id);
 
 }

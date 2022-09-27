@@ -2,87 +2,222 @@ package com.i2i.controller;
 
 
 import com.i2i.entity.Employee;
+import com.i2i.entity.Trainee;
+import com.i2i.entity.Trainer;
 import com.i2i.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
+/**
+ * <p>
+ * EmployeeController class with the helps of getting inputs
+ * from user and passing to employee service.
+ * </p>
+ *
+ * @author Sanjai king
+ *
+ * @version 1
+ *
+ * @since 2022-07-18
+ */
 @Controller
 public class EmployeeController{
 
+
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
-    @PostMapping("/saveEmployee")
-    public ModelAndView addEmployee(@ModelAttribute("employee") Employee employee){
-        employeeService.saveEmployee(employee);
+
+
+    @PostMapping("/saveTrainee")
+    public ModelAndView addTrainee(@ModelAttribute("trainee") Trainee trainee){
+
+        employeeService.saveEmployee(trainee);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("view2");
         return  modelAndView ;
     }
 
-    @RequestMapping("/saveForm")
-    public ModelAndView showform(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("saveForm");
-        modelAndView.addObject("employee",new Employee());
-        return modelAndView;
-    }
 
-    @RequestMapping("/Display")
-    public ModelAndView displayForm(){
-        List<Employee> employees = employeeService.getEmployees();
-        return new ModelAndView("Display","employees",employees);
-    }
 
-    @RequestMapping("/update")
-    public ModelAndView updateform(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("updateForm");
-        modelAndView.addObject("employee",new Employee());
-        return modelAndView;
-    }
+    @PostMapping("/saveTrainer")
+    public ModelAndView addTrainer(@ModelAttribute("trainer") Trainer trainer){
 
-    @PostMapping ("/updateEmployee")
-    public ModelAndView updateEmployee(@ModelAttribute("employee") Employee updateEmployee){
-        Employee employee = employeeService.getEmployeeById(updateEmployee.getId());
-        employee.setEmail(updateEmployee.getEmail());
-        employeeService.updateEmployee(employee);
+        employeeService.saveEmployee(trainer);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("view2");
         return  modelAndView ;
     }
 
-    @PostMapping ("/deleteEmployee")
-    public ModelAndView deleteEmployee(@ModelAttribute("employee") Employee employee){
-        employeeService.deleteEmployee(employee);
+    @RequestMapping("/saveTraineeForm")
+    public ModelAndView showTrainee(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("saveTraineeForm");
+        modelAndView.addObject("trainee",new Employee());
+        return modelAndView;
+
+    }
+
+    @RequestMapping("/saveTrainerForm")
+    public ModelAndView showTrainer(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("saveTrainerForm");
+        modelAndView.addObject("trainer",new Employee());
+        return modelAndView;
+    }
+
+   @RequestMapping("/DisplayAllTrainees")
+    public ModelAndView displayAllTrainee(){
+        List<Trainee> trainees = employeeService.getTrainees();
+        return new ModelAndView("DisplayAllTrainees","trainees",trainees);
+    }
+
+    @RequestMapping("/DisplayAllTrainers")
+    public ModelAndView displayAllTrainer(){
+        List<Trainer> trainers = employeeService.getTrainers();
+        return new ModelAndView("DisplayAllTrainers","trainers",trainers);
+    }
+
+    @RequestMapping("/updateTrainee")
+    public ModelAndView updateTraineeForm(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("updateTraineeForm");
+        modelAndView.addObject("trainee",new Trainee());
+        return modelAndView;
+    }
+
+    @RequestMapping("/updateTrainer")
+    public ModelAndView updateTrainerForm(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("updateTrainerForm");
+        modelAndView.addObject("trainer",new Trainer());
+        return modelAndView;
+    }
+
+    @PostMapping ("/updateTrainee")
+    public ModelAndView updateTrainee(@ModelAttribute("trainee") Trainee updateTrainee){
+        Trainee trainee = employeeService.getTraineeById(updateTrainee.getEmployeeId());
+        trainee.setEmployeeEmail(updateTrainee.getEmployeeEmail());
+        employeeService.updateEmployee(trainee);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("view2");
         return  modelAndView ;
     }
 
-    @RequestMapping("/deleteForm")
-    public ModelAndView showDeleteForm(){
+    @PostMapping ("/updateTrainer")
+    public ModelAndView updateTrainer(@ModelAttribute("trainer") Trainer updateTrainer){
+        Trainer trainer = employeeService.getTrainerById(updateTrainer.getEmployeeId());
+        trainer.setEmployeeEmail(updateTrainer.getEmployeeEmail());
+        employeeService.updateEmployee(trainer);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("deleteForm");
-        modelAndView.addObject("employee",new Employee());
+        modelAndView.setViewName("view2");
+        return  modelAndView ;
+    }
+
+    @PostMapping ("/deleteTrainee")
+    public ModelAndView deleteTrainee(@ModelAttribute("trainee") Trainee deleteTrainee){
+        Trainee trainee = employeeService.getTraineeById(deleteTrainee.getEmployeeId());
+        trainee.setIsActiveEmployee(1);
+        employeeService.deleteEmployee(trainee);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("view2");
+        return  modelAndView ;
+    }
+
+    @RequestMapping("/deleteTraineeForm")
+    public ModelAndView showTraineeDeleteForm(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("deleteTraineeForm");
+        modelAndView.addObject("trainee",new Trainee());
         return modelAndView;
     }
 
-    @RequestMapping("/displayByIdEmployee")
-    public ModelAndView displayByIdForm(@ModelAttribute("employee") Employee displayEmployee){
-        Employee employee = employeeService.getEmployeeById(displayEmployee.getId());
-        return new ModelAndView("idView","employee",employee);
+    @PostMapping ("/deleteTrainer")
+    public ModelAndView deleteTrainer(@ModelAttribute("trainer") Trainer deleteTrainer){
+        Trainer trainer = employeeService.getTrainerById(deleteTrainer.getEmployeeId());
+        trainer.setIsActiveEmployee(1);
+        employeeService.deleteEmployee(trainer);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("view2");
+        return  modelAndView ;
     }
 
-    @RequestMapping("/displayById")
-    public ModelAndView displayByIdform(){
+    @RequestMapping("/deleteTrainerForm")
+    public ModelAndView showTrainerDeleteForm(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("displayById");
-        modelAndView.addObject("employee",new Employee());
+        modelAndView.setViewName("deleteTrainerForm");
+        modelAndView.addObject("trainer",new Trainer());
         return modelAndView;
     }
+
+    @PostMapping("/displayTrainee")
+    public ModelAndView getTraineeById(@ModelAttribute("trainee") Trainee displayTrainee){
+        Trainee trainee = employeeService.getTraineeById(displayTrainee.getEmployeeId());
+        return new ModelAndView("DisplayTraineeByIdView","trainee",trainee);
+    }
+
+    @RequestMapping("/displayTraineeById")
+    public ModelAndView displayTraineeById(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("DisplayTraineeById");
+        modelAndView.addObject("trainee",new Trainee());
+        return modelAndView;
+    }
+
+    @PostMapping("/displayTrainer")
+    public ModelAndView getTrainerById(@ModelAttribute("trainer") Trainee displayTrainer){
+        Trainer trainer = employeeService.getTrainerById(displayTrainer.getEmployeeId());
+        return new ModelAndView("DisplayTrainerByIdView","trainer",trainer);
+    }
+
+    @RequestMapping("/displayTrainerById")
+    public ModelAndView displayTrainerById(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("DisplayTrainerById");
+        modelAndView.addObject("trainer",new Trainer());
+        return modelAndView;
+    }
+
+    @RequestMapping("/associate")
+    public ModelAndView displayTraineeForAssociate(){
+            List<Trainee> trainees = employeeService.getTrainees();
+            return new ModelAndView("DisplayAllTrainees","trainees",trainees);
+    }
+
+    @RequestMapping("/AssociateTrainee")
+    public ModelAndView associateTrainee(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("associateTrainee");
+        return modelAndView;
+
+    }
+
+    @RequestMapping("/Associate")
+    public ModelAndView associateTrainee(@RequestParam("traineeId")String traineeId, @RequestParam("trainerId")String trainerId){
+
+        Trainer trainer = employeeService.getTrainerById(trainerId);
+        Trainee trainee = employeeService.getTraineeById(traineeId);
+        trainer.getTrainees().add(trainee);
+        employeeService.updateEmployee(trainer);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("view2");
+        return  modelAndView ;
+
+    }
+
+    @ExceptionHandler(value = NoResultException.class)
+    public String exceptionHandler(Model model) {
+        model.addAttribute("err", "Id Doesn't exists.... Please Enter a Valid Id");
+        return "error";
+    }
+
+
+
 }

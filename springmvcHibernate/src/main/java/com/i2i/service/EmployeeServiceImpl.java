@@ -8,71 +8,64 @@ import com.i2i.entity.Trainee;
 import com.i2i.entity.Trainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-
+import javax.transaction.Transactional;
 
 @Service
-public class EmployeeServiceImpl<T extends Employee> implements EmployeeService<T>{
+@Transactional
+public class EmployeeServiceImpl<T extends Employee> implements EmployeeService<T> {
 
     @Autowired
-    private T employee;
 
-    @Autowired
-    private EmployeeDao<Trainer> trainerDao;
+    private EmployeeDao employeeDao;
 
-    @Autowired
-    private EmployeeDao<Trainee> traineeDao;
 
     @Override
-    @Transactional
-    public List<T> getEmployees() {
-        if (employee instanceof Trainee) {
-            return (List<T>)traineeDao.getTrainees();
+    public void saveEmployee(T employee) {
+        if (employee instanceof Trainer) {
+            employeeDao.saveEmployee( employee);
         } else {
-            return (List<T>)trainerDao.getTrainers();
+            employeeDao.saveEmployee( employee);
         }
     }
 
-    @Transactional
-    public void saveEmployee(T saveEmployee) {
-        if(employee instanceof Trainee){
-            traineeDao.saveTrainee((Trainee)saveEmployee);
-        } else {
-            trainerDao.saveTrainer((Trainer)saveEmployee);
-        }
+    /**
+     * Retrieve list of  All Employees
+     * @return {@link List} of {@link T}
+     */
+    @Override
+    public List<Trainee> getTrainees() {
+        return  employeeDao.retriveAllTrainees();
     }
 
-
+    /**
+     * Retrieve list of  All Employees
+     * @return {@link List} of {@link T}
+     */
     @Override
-    @Transactional
-    public void deleteTrainee(Trainee trainee) {
-        employeeDao.deleteTrainee(trainee);
-    }
-
-    @Override
-    @Transactional
-    public void deleteTrainer(Trainer trainer) {
-        employeeDao.deleteTrainer(trainer);
+    public List<Trainer> getTrainers() {
+            return employeeDao.retriveAllTrainers();
     }
 
     @Override
-    @Transactional
-    public void updateTrainee(Trainee trainee) {
-        employeeDao.updateTrainee(trainee);
+    public Trainee getTraineeById(String id) {
+        return  employeeDao.getTraineeById(id);
     }
 
     @Override
-    @Transactional
-    public void updateTrainer(Trainer trainer) {
-        employeeDao.updateTrainer(trainer);
+    public Trainer getTrainerById(String id) {
+        return  employeeDao.getTrainerById(id);
     }
 
-    public Trainee getTraineeById(int id){
-        return employeeDao.getTraineeById(id);
+    @Override
+    public void deleteEmployee(T deleteEmployee) {
+            employeeDao.updateEmployee(deleteEmployee);
     }
 
-    public Employee getTrainerById(int id){
-        return employeeDao.getTrainerById(id);
+    @Override
+    public void updateEmployee(T updateEmployee) {
+
+            employeeDao.updateEmployee(updateEmployee);
     }
+
 }

@@ -6,10 +6,16 @@
 <html>
 <body>
      !WELCOME TO EMPLOYEE MANAGEMENT PORTAL!<br>
-     <a href="saveForm">ADD EMPLOYEE</a><br>
-     <a href="Display">VIEW EMPLOYEES</a><br>
-     <a href="update">UPDATE EMPLOYEE</a><br>
-     <a href="deleteForm">DELETE EMPLOYEE</a><br>
-     <a href="displayById">GET EMPLOYEE BY ID </a>
+     CLICK HERE FOR    <a href="saveTraineeForm">ADD TRAINEE</a><br>
+     CLICK HERE FOR    <a href="saveTrainerForm">ADD TRAINER</a><br>
+     CLICK HERE FOR    <a href="DisplayAllTrainees">VIEW TRAINEES</a><br>
+     CLICK HERE FOR    <a href="DisplayAllTrainers">VIEW TRAINERS</a><br>
+     CLICK HERE FOR    <a href="updateTrainee">UPDATE TRAINEE</a><br>
+     CLICK HERE FOR    <a href="updateTrainer">UPDATE TRAINER</a><br>
+     CLICK HERE FOR    <a href="deleteTrainerForm">DELETE TRAINER</a><br>
+     CLICK HERE FOR    <a href="deleteTraineeForm">DELETE TRAINEE</a><br>
+     CLICK HERE FOR    <a href="displayTraineeById">GET TRAINEE BY ID </a><br>
+     CLICK HERE FOR    <a href="displayTrainerById">GET TRAINER BY ID </a><br>
+     CLICK HERE FOR    <a href="associate">ASSOCIATE TRAINEE FOR TRAINER</a>
 </body>
 </html>
